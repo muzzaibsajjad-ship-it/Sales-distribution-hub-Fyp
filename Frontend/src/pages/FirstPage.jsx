@@ -14,6 +14,141 @@ import {
   sanitizeTextOnly,
 } from "../utils/inputValidation";
 
+// Explicit imports for assets (avoid dynamic glob) so each image is bundled
+import img_3_in_1_Sauce_png from '../assets/3 in 1 Sauce.png';
+import img_Achari_Spice_Mix_png from '../assets/Achari Spice Mix.png';
+import img_Achari_Macaroni_png from '../assets/Achari-Macaroni.png';
+import img_Alfredo_png from '../assets/Alfredo.png';
+import img_Bar_B_Q_Sauce_png from '../assets/Bar-B-Q Sauce.png';
+import img_Bar_B_Q_Spice_Mix_png from '../assets/Bar-B-Q Spice Mix.png';
+import img_BIG_ELBOW_2_png from '../assets/BIG-ELBOW-2.png';
+import img_big_elbow_macroni_1_png from '../assets/big-elbow-macroni-1.png';
+import img_BIG_PENNE_PLAIN_png from '../assets/BIG-PENNE-PLAIN.png';
+// BKP-Logo.png already imported as `logo`
+import img_Cajun_png from '../assets/Cajun.png';
+import img_Chat_Masala_png from '../assets/Chat-Masala.png';
+import img_Chicken_Achari_Spice_Mix_png from '../assets/Chicken Achari Spice Mix.png';
+import img_Chicken_Chilli_Spaghetti_png from '../assets/Chicken-Chilli-Spaghetti.png';
+import img_Chicken_Chowmein_Spaghetti_png from '../assets/Chicken-Chowmein-Spaghetti.png';
+import img_Chicken_Chowmien_Spaghetti_png from '../assets/Chicken-Chowmien-Spaghetti.png';
+import img_Chilli_Garlic_Sauce_png from '../assets/Chilli Garlic Sauce.png';
+import img_chilli_garlic_sauce_1_png from '../assets/chilli-garlic-sauce-1.png';
+import img_chilli_sause_png from '../assets/chilli-sause.png';
+import img_Chowmein_Hakka_Noodles_png from '../assets/Chowmein-Hakka-Noodles.png';
+import img_Classic_Pasta_Sauce_png from '../assets/Classic Pasta Sauce.png';
+import img_color_vermicelli_png from '../assets/color-vermicelli.png';
+import img_Cut_Vermecelli_jpg from '../assets/Cut Vermecelli.jpg';
+import img_export_vermicelli_png from '../assets/export-vermicelli.png';
+import img_Fajita_Spaghetti_png from '../assets/Fajita-Spaghetti.png';
+import img_Green_Chilli_Sauce_png from '../assets/Green Chilli Sauce.png';
+import img_Ice_Cream_Syrup_png from '../assets/Ice-Cream-Syrup.png';
+import img_Imli_Sauce_png from '../assets/Imli Sauce.png';
+import img_Jam_e_Mashriq_png from '../assets/Jam-e-Mashriq.png';
+import img_JUMB_ELBOW_MCK_1_png from '../assets/JUMB-ELBOW-MCK-1.png';
+import img_KHOWSUEY_1_png from '../assets/KHOWSUEY-1.png';
+import img_Lasagne_Spaghetti_png from '../assets/Lasagne Spaghetti.png';
+import img_lasagne_png from '../assets/lasagne.png';
+import img_logo_png from '../assets/logo.png';
+import img_LONG_MAC_1_png from '../assets/LONG-MAC-1.png';
+import img_Main_Image_jpeg from '../assets/Main Image.jpeg';
+import img_Malai_Tikka_Spice_Mix_png from '../assets/Malai Tikka Spice Mix.png';
+import img_Peene_Macaroni_png from '../assets/Peene Macaroni.png';
+import img_Pizza_Sauce_png from '../assets/Pizza Sauce.png';
+import img_plain_vermicelli_500_x_500_png from '../assets/plain-vermicelli-500-x-500.png';
+import img_product_resize_18_png from '../assets/product-resize-18.png';
+import img_Qeema_Spice_Mix_png from '../assets/Qeema Spice Mix.png';
+import img_Red_Sauce_Mix_png from '../assets/Red-Sauce-Mix.png';
+import img_Ring_Macaroni_png from '../assets/Ring-Macaroni.png';
+import img_Seven_Spice_png from '../assets/Seven Spice.png';
+import img_Shashlik_Spice_Mix_png from '../assets/Shashlik Spice Mix.png';
+import img_shell_revised_png from '../assets/shell-revised.png';
+import img_Simple_Vermecelli_png from '../assets/Simple Vermecelli.png';
+import img_Soy_Sauce_png from '../assets/Soy-Sauce.png';
+import img_spagheti_png from '../assets/spagheti.png';
+import img_Spiral_Macaroni_png from '../assets/Spiral Macaroni.png';
+import img_Synthetic_White_Vinegar_png from '../assets/Synthetic-White-Vinegar.png';
+import img_Three_Colour_Macaroni_png from '../assets/Three Colour Macaroni.png';
+import img_Tikka_Spice_Mix_jpg from '../assets/Tikka Spice Mix.jpg';
+import img_Tikka_Macaroni_png from '../assets/Tikka-Macaroni.png';
+import img_Tomato_Ketchup_png from '../assets/Tomato Ketchup.png';
+import img_tomato_ketchup_1_1_png from '../assets/tomato-ketchup-1-1.png';
+import img_tomato_ketchup_1_png from '../assets/tomato-ketchup-1.png';
+import img_Twisted_Macaroni_png from '../assets/Twisted Macaroni.png';
+import img_U_Shaped_Vermicelli_png from '../assets/U-Shaped Vermicelli.png';
+import img_Vermecelli_png from '../assets/Vermecelli.png';
+import img_Wheat_Bar_B_Que_Macaroni_png from '../assets/Wheat Bar-B-Que-Macaroni.png';
+import img_Wheat_Spaghetti_png from '../assets/Wheat Spaghetti.png';
+import img_White_Sauce_Mix_png from '../assets/White-Sauce-Mix.png';
+import img_whole_wheat_elbow_macroni_1_1_png from '../assets/whole-wheat-elbow-macroni-1-1.png';
+
+const assetMap = {
+  '3 in 1 Sauce.png': img_3_in_1_Sauce_png,
+  'Achari Spice Mix.png': img_Achari_Spice_Mix_png,
+  'Achari-Macaroni.png': img_Achari_Macaroni_png,
+  'Alfredo.png': img_Alfredo_png,
+  'Bar-B-Q Sauce.png': img_Bar_B_Q_Sauce_png,
+  'Bar-B-Q Spice Mix.png': img_Bar_B_Q_Spice_Mix_png,
+  'BIG-ELBOW-2.png': img_BIG_ELBOW_2_png,
+  'big-elbow-macroni-1.png': img_big_elbow_macroni_1_png,
+  'BIG-PENNE-PLAIN.png': img_BIG_PENNE_PLAIN_png,
+  'BKP-Logo.png': logo,
+  'Cajun.png': img_Cajun_png,
+  'Chat-Masala.png': img_Chat_Masala_png,
+  'Chicken Achari Spice Mix.png': img_Chicken_Achari_Spice_Mix_png,
+  'Chicken-Chilli-Spaghetti.png': img_Chicken_Chilli_Spaghetti_png,
+  'Chicken-Chowmein-Spaghetti.png': img_Chicken_Chowmein_Spaghetti_png,
+  'Chicken-Chowmien-Spaghetti.png': img_Chicken_Chowmien_Spaghetti_png,
+  'Chilli Garlic Sauce.png': img_Chilli_Garlic_Sauce_png,
+  'chilli-garlic-sauce-1.png': img_chilli_garlic_sauce_1_png,
+  'chilli-sause.png': img_chilli_sause_png,
+  'Chowmein-Hakka-Noodles.png': img_Chowmein_Hakka_Noodles_png,
+  'Classic Pasta Sauce.png': img_Classic_Pasta_Sauce_png,
+  'color-vermicelli.png': img_color_vermicelli_png,
+  'Cut Vermecelli.jpg': img_Cut_Vermecelli_jpg,
+  'export-vermicelli.png': img_export_vermicelli_png,
+  'Fajita-Spaghetti.png': img_Fajita_Spaghetti_png,
+  'Green Chilli Sauce.png': img_Green_Chilli_Sauce_png,
+  'Ice-Cream-Syrup.png': img_Ice_Cream_Syrup_png,
+  'Imli Sauce.png': img_Imli_Sauce_png,
+  'Jam-e-Mashriq.png': img_Jam_e_Mashriq_png,
+  'JUMB-ELBOW-MCK-1.png': img_JUMB_ELBOW_MCK_1_png,
+  'KHOWSUEY-1.png': img_KHOWSUEY_1_png,
+  'Lasagne Spaghetti.png': img_Lasagne_Spaghetti_png,
+  'lasagne.png': img_lasagne_png,
+  'logo.png': img_logo_png,
+  'LONG-MAC-1.png': img_LONG_MAC_1_png,
+  'Main Image.jpeg': img_Main_Image_jpeg,
+  'Malai Tikka Spice Mix.png': img_Malai_Tikka_Spice_Mix_png,
+  'Peene Macaroni.png': img_Peene_Macaroni_png,
+  'Pizza Sauce.png': img_Pizza_Sauce_png,
+  'plain-vermicelli-500-x-500.png': img_plain_vermicelli_500_x_500_png,
+  'product-resize-18.png': img_product_resize_18_png,
+  'Qeema Spice Mix.png': img_Qeema_Spice_Mix_png,
+  'Red-Sauce-Mix.png': img_Red_Sauce_Mix_png,
+  'Ring-Macaroni.png': img_Ring_Macaroni_png,
+  'Seven Spice.png': img_Seven_Spice_png,
+  'Shashlik Spice Mix.png': img_Shashlik_Spice_Mix_png,
+  'shell-revised.png': img_shell_revised_png,
+  'Simple Vermecelli.png': img_Simple_Vermecelli_png,
+  'Soy-Sauce.png': img_Soy_Sauce_png,
+  'spagheti.png': img_spagheti_png,
+  'Spiral Macaroni.png': img_Spiral_Macaroni_png,
+  'Synthetic-White-Vinegar.png': img_Synthetic_White_Vinegar_png,
+  'Three Colour Macaroni.png': img_Three_Colour_Macaroni_png,
+  'Tikka Spice Mix.jpg': img_Tikka_Spice_Mix_jpg,
+  'Tikka-Macaroni.png': img_Tikka_Macaroni_png,
+  'Tomato Ketchup.png': img_Tomato_Ketchup_png,
+  'tomato-ketchup-1-1.png': img_tomato_ketchup_1_1_png,
+  'tomato-ketchup-1.png': img_tomato_ketchup_1_png,
+  'Twisted Macaroni.png': img_Twisted_Macaroni_png,
+  'U-Shaped Vermicelli.png': img_U_Shaped_Vermicelli_png,
+  'Vermecelli.png': img_Vermecelli_png,
+  'Wheat Bar-B-Que-Macaroni.png': img_Wheat_Bar_B_Que_Macaroni_png,
+  'Wheat Spaghetti.png': img_Wheat_Spaghetti_png,
+  'White-Sauce-Mix.png': img_White_Sauce_Mix_png,
+  'whole-wheat-elbow-macroni-1-1.png': img_whole_wheat_elbow_macroni_1_1_png,
+};
+
 /* ─────────────────────────────────────────────────────────────────────────────
    DATA
 ───────────────────────────────────────────────────────────────────────────── */
@@ -247,7 +382,7 @@ const FirstPage = () => {
       <section style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <img
-            src="/src/assets/Main Image.jpeg"
+            src={assetMap['Main Image.jpeg']}
             alt=""
             style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.75)", animation: "bpZoom 14s ease-in-out infinite alternate" }}
             onError={e => { e.target.parentElement.style.background = "linear-gradient(135deg,#3a1010,#7f2c2c)"; e.target.style.display = "none"; }}
@@ -348,7 +483,7 @@ const FirstPage = () => {
                     transition: "border-color 0.3s, transform 0.4s cubic-bezier(0.34,1.56,0.64,1)",
                   }} className="bp-catimg-wrap">
                     <img
-                      src={`/src/assets/${cat.img}`}
+                      src={assetMap[cat.img]}
                       alt={cat.label}
                       style={{ width: "88%", height: "88%", objectFit: "contain", transition: "transform 0.4s" }}
                       className="bp-catimg-el"
@@ -512,7 +647,7 @@ const FirstPage = () => {
         <div style={{ position: "relative", borderRadius: 28, overflow: "hidden", boxShadow: "0 20px 60px rgba(127,44,44,0.25)", transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1)" }}
           className="bp-about-img"
         >
-          <img src="/src/assets/Main Image.jpeg" alt="Bake Parlour" style={{ width: "100%", height: 380, objectFit: "cover", display: "block" }} onError={e => e.target.style.display = "none"} />
+          <img src={assetMap['Main Image.jpeg']} alt="Bake Parlour" style={{ width: "100%", height: 380, objectFit: "cover", display: "block" }} onError={e => e.target.style.display = "none"} />
           <div style={{ position: "absolute", bottom: "1.5rem", right: "1.5rem", background: "#7f2c2c", borderRadius: 16, padding: "0.85rem 1.3rem", textAlign: "center", boxShadow: "0 8px 30px rgba(0,0,0,0.3)" }}>
             <span style={{ display: "block", fontFamily: "'Playfair Display', serif", fontSize: "2rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>30+</span>
             <span style={{ fontSize: "0.68rem", color: "#ffd6a0", fontWeight: 600 }}>Years of Trust</span>
@@ -581,7 +716,7 @@ const FirstPage = () => {
               className="bp-circle-wrap"
             >
               <img
-                src={`/src/assets/${cat.img}`}
+                src={assetMap[cat.img]}
                 alt={cat.label}
                 style={{ width: "74%", height: "74%", objectFit: "contain", transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1)" }}
                 className="bp-circle-img"
@@ -610,7 +745,7 @@ const FirstPage = () => {
           >
             <div style={{ width: "100%", height: 115, display: "flex", alignItems: "center", justifyContent: "center", background: "#fdf6f4", borderRadius: 12, overflow: "hidden" }}>
               <img
-                src={`/src/assets/${p.img}`}
+                src={assetMap[p.img]}
                 alt={p.name}
                 style={{ maxWidth: "88%", maxHeight: "88%", objectFit: "contain", transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1)" }}
                 className="bp-prod-img"
