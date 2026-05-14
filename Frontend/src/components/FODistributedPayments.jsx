@@ -15,6 +15,7 @@ import {
   FaFilter,
 } from "react-icons/fa";
 import { formatPrice, calculateOrderTotal, roundPrice } from "../utils/pricing";
+import PageLoader from "./common/PageLoader";
 
 const FODistributedPayments = () => {
   const [orders, setOrders] = useState([]);
@@ -80,12 +81,7 @@ const FODistributedPayments = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-[#4b2e2e]">
-        <FaSpinner className="animate-spin text-3xl mb-2 text-[#7f2c2c]" />
-        <p className="font-medium">Loading payment records...</p>
-      </div>
-    );
+    return <PageLoader message="Loading payment records..." />;
   }
 
   const tabs = [

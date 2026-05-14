@@ -18,6 +18,11 @@ FaEdit,
   FaEnvelope,
   FaUser,
 } from "react-icons/fa";
+import {
+  sanitizeAlphaNumericText,
+  sanitizeNumberOnly,
+  sanitizeTextOnly,
+} from "../utils/inputValidation";
 
 const SupplierList = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -48,8 +53,14 @@ const SupplierList = () => {
     fetchSuppliers();
   }, []);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    let nextValue = value;
+    if (name === "name" || name === "companyName") nextValue = sanitizeTextOnly(value);
+    if (name === "phone") nextValue = sanitizeNumberOnly(value).slice(0, 15);
+    if (name === "address") nextValue = sanitizeAlphaNumericText(value);
+    setForm({ ...form, [name]: nextValue });
+  };
 
   const resetForm = () => {
     setForm({ name: "", phone: "", address: "", email: "", companyName: "" });
@@ -138,6 +149,7 @@ const SupplierList = () => {
               name="name"
               value={form.name}
               onChange={handleChange}
+              pattern="[A-Za-z ]+"
               className="p-3 border-[3px] border-[#7f2c2c] bg-transparent outline-none"
               required
             />
@@ -152,6 +164,7 @@ const SupplierList = () => {
               name="companyName"
               value={form.companyName}
               onChange={handleChange}
+              pattern="[A-Za-z ]*"
               className="p-3 border-[3px] border-[#7f2c2c] bg-transparent outline-none"
             />
           </div>
@@ -165,6 +178,7 @@ const SupplierList = () => {
               name="phone"
               value={form.phone}
               onChange={handleChange}
+              inputMode="numeric"
               className="p-3 border-[3px] border-[#7f2c2c] bg-transparent outline-none"
             />
           </div>

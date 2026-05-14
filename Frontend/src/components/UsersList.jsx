@@ -25,6 +25,7 @@ import {
   FaTimesCircle,
   FaPowerOff,
 } from "react-icons/fa";
+import PageLoader from "./common/PageLoader";
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -163,12 +164,7 @@ const UsersList = () => {
       : { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", label: "Inactive", icon: FaTimesCircle };
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-[#4b2e2e]">
-        <FaSpinner className="animate-spin text-3xl mb-2 text-[#7f2c2c]" />
-        <p className="font-medium">Loading users...</p>
-      </div>
-    );
+    return <PageLoader message="Loading users..." />;
   }
 
   if (error) {

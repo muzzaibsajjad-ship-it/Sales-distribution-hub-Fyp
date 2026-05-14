@@ -4,9 +4,10 @@ import { toast } from "react-toastify";
 import {
   FaBoxOpen,
   FaSortNumericDown,
-  FaDollarSign,
   FaMoneyBillWave,
 } from "react-icons/fa";
+import { sanitizeNumberOnly } from "../../utils/inputValidation";
+import PageLoader from "../common/PageLoader";
 
 const CreateOrderForm = () => {
   const [items, setItems] = useState([]);
@@ -50,12 +51,7 @@ const CreateOrderForm = () => {
     }
   };
 
-  if (loading)
-    return (
-      <p className="text-[#4b2e2e] text-center py-10 font-medium">
-        Loading available items...
-      </p>
-    );
+  if (loading) return <PageLoader message="Loading available items..." />;
 
   if (items.length === 0)
     return (
@@ -107,7 +103,8 @@ const CreateOrderForm = () => {
                 type="number"
                 min="1"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(e) => setQuantity(sanitizeNumberOnly(e.target.value))}
+                inputMode="numeric"
                 className="p-3 border-2 border-[#7f2c2c] bg-transparent text-[#4b2e2e] outline-none"
                 required
               />

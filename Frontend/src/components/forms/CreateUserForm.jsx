@@ -2,14 +2,18 @@ import { useState } from "react";
 import { createUserApi } from "../../api/api";
 import { toast } from "react-toastify";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import { sanitizeTextOnly } from "../../utils/inputValidation";
 
 const CreateUserForm = ({ currentRole }) => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const nextValue = name === "name" ? sanitizeTextOnly(value) : value;
+    setForm({ ...form, [name]: nextValue });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,6 +59,7 @@ const CreateUserForm = ({ currentRole }) => {
             name="name"
             value={form.name}
             onChange={handleChange}
+            pattern="[A-Za-z ]+"
             className="p-3 border-[3px] border-[#7f2c2c] bg-transparent text-[#4b2e2e] outline-none"
             required
           />
@@ -86,6 +91,9 @@ const CreateUserForm = ({ currentRole }) => {
               name="password"
               value={form.password}
               onChange={handleChange}
+              minLength={8}
+              pattern="(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}"
+              title="Password must be at least 8 characters and include 1 uppercase letter, 1 number, and 1 special character."
               className="w-full p-3 border-[3px] border-[#7f2c2c] bg-transparent text-[#4b2e2e] outline-none pr-10"
               required
             />

@@ -8,6 +8,7 @@ import {
   FaStar,
 } from "react-icons/fa";
 import { getFOBookersPerformanceApi } from "../api/api";
+import PageLoader from "./common/PageLoader";
 
 const formatMonth = (monthStr) => {
   if (!monthStr) return "Current Month";
@@ -35,11 +36,7 @@ const FOBookersPerformance = () => {
   }, []);
 
   if (loading) {
-    return (
-      <p className="text-[#4b2e2e] font-medium text-center py-10">
-        Loading bookers performance...
-      </p>
-    );
+    return <PageLoader message="Loading bookers performance..." />;
   }
 
   return (

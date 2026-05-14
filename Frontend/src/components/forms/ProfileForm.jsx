@@ -3,6 +3,8 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import { API_BASE_URL } from "../../api/api";
+import { sanitizeTextOnly } from "../../utils/inputValidation";
 
 const ProfileForm = () => {
   const { user, login } = useAuth();
@@ -14,8 +16,11 @@ const ProfileForm = () => {
     if (user) setForm({ name: user.name, email: user.email, password: "" });
   }, [user]);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const nextValue = name === "name" ? sanitizeTextOnly(value) : value;
+    setForm({ ...form, [name]: nextValue });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +28,7 @@ const ProfileForm = () => {
     try {
       const token = user.token;
       const { data } = await axios.put(
-        "http://localhost:5000/api/users/profile",
+        `${API_BASE_URL}/users/profile`,
         form,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -55,6 +60,7 @@ const ProfileForm = () => {
             name="name"
             value={form.name}
             onChange={handleChange}
+            pattern="[A-Za-z ]+"
             className="p-3 border-[3px] border-[#7f2c2c] bg-transparent text-[#4b2e2e] outline-none"
             required
           />
@@ -86,6 +92,9 @@ const ProfileForm = () => {
               name="password"
               value={form.password}
               onChange={handleChange}
+              minLength={8}
+              pattern="(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}"
+              title="Password must be at least 8 characters and include 1 uppercase letter, 1 number, and 1 special character."
               className="w-full p-3 border-[3px] border-[#7f2c2c] bg-transparent text-[#4b2e2e] outline-none pr-10"
             />
             <button
@@ -114,3 +123,5 @@ const ProfileForm = () => {
 };
 
 export default ProfileForm;
+
+

@@ -8,6 +8,11 @@ import {
   FaDollarSign,
   FaUser,
 } from "react-icons/fa";
+import {
+  sanitizeDecimal,
+  sanitizeNumberOnly,
+  sanitizeTextOnly,
+} from "../../utils/inputValidation";
 
 const AddStockForm = () => {
   const [form, setForm] = useState({
@@ -24,6 +29,19 @@ const AddStockForm = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [showCustomizeUnits, setShowCustomizeUnits] = useState(false);
+  const [customUnitValues, setCustomUnitValues] = useState("8,10,12,14");
+
+  useEffect(() => {
+    const savedUnitValues = localStorage.getItem("add_stock_custom_unit_values");
+    if (savedUnitValues && savedUnitValues.trim()) {
+      setCustomUnitValues(savedUnitValues);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("add_stock_custom_unit_values", customUnitValues);
+  }, [customUnitValues]);
 
   useEffect(() => {
     const qty = parseFloat(form.quantity) || 0;
@@ -50,9 +68,19 @@ const AddStockForm = () => {
         supplierName: selected ? selected.name : value,
       });
     } else {
-      setForm({ ...form, [name]: value });
+      let nextValue = value;
+      if (name === "itemName") nextValue = sanitizeTextOnly(value);
+      if (name === "quantity") nextValue = sanitizeNumberOnly(value);
+      if (name === "purchasePrice") nextValue = sanitizeDecimal(value);
+      if (name === "unitsPerPack") nextValue = sanitizeNumberOnly(value);
+      setForm({ ...form, [name]: nextValue });
     }
   };
+
+  const unitsOptions = customUnitValues
+    .split(",")
+    .map((val) => sanitizeNumberOnly(val.trim()))
+    .filter((val) => val !== "" && Number(val) > 0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,6 +123,7 @@ const AddStockForm = () => {
                 name="itemName"
                 value={form.itemName}
                 onChange={handleChange}
+                pattern="[A-Za-z ]+"
                 className="p-3 border-[3px] border-[#7f2c2c] bg-transparent text-[#4b2e2e] outline-none"
                 required
               />
@@ -119,12 +148,21 @@ const AddStockForm = () => {
             </div>
 
             <div className="flex flex-col">
-              <label className="mb-1 flex items-center gap-2">
-                <FaSortNumericDown className="text-[#7f2c2c]" />
-                {form.stockType
-                  ? `Quantity Per ${form.stockType}`
-                  : "Quantity Per Pack"}
-              </label>
+              <div className="mb-1 flex items-center justify-between gap-2">
+                <label className="flex items-center gap-2">
+                  <FaSortNumericDown className="text-[#7f2c2c]" />
+                  {form.stockType
+                    ? `Quantity Per ${form.stockType}`
+                    : "Quantity Per Pack"}
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setShowCustomizeUnits(true)}
+                  className="text-xs text-[#7f2c2c] underline hover:text-[#5f1e1e]"
+                >
+                  Customize
+                </button>
+              </div>
               <select
                 name="unitsPerPack"
                 value={form.unitsPerPack}
@@ -133,7 +171,7 @@ const AddStockForm = () => {
                 required
               >
                 <option value="">Select Units</option>
-                {[8, 10, 12, 14].map((value) => (
+                {unitsOptions.map((value) => (
                   <option key={value} value={value}>
                     {value}
                   </option>
@@ -153,6 +191,7 @@ const AddStockForm = () => {
                 name="quantity"
                 value={form.quantity}
                 onChange={handleChange}
+                inputMode="numeric"
                 className="p-3 border-[3px] border-[#7f2c2c] bg-transparent text-[#4b2e2e] outline-none"
                 required
               />
@@ -167,6 +206,7 @@ const AddStockForm = () => {
                 name="purchasePrice"
                 value={form.purchasePrice}
                 onChange={handleChange}
+                inputMode="decimal"
                 className="p-3 border-[3px] border-[#7f2c2c] bg-transparent text-[#4b2e2e] outline-none"
                 required
               />
@@ -234,6 +274,34 @@ const AddStockForm = () => {
           </button>
         </form>
       </div>
+
+      {showCustomizeUnits && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-[#E8F0F8] w-full max-w-md p-4 border-[3px] border-[#7f2c2c]">
+            <h4 className="text-lg font-bold text-[#4b2e2e] mb-2">
+              Customize Unit Dropdown
+            </h4>
+            <p className="text-xs text-[#4b2e2e] mb-2">
+              Enter comma-separated values, e.g. `8,10,12,14`
+            </p>
+            <input
+              type="text"
+              value={customUnitValues}
+              onChange={(e) => setCustomUnitValues(e.target.value)}
+              className="w-full p-3 border-[3px] border-[#7f2c2c] bg-transparent text-[#4b2e2e] outline-none text-sm"
+            />
+            <div className="flex justify-end gap-2 mt-3">
+              <button
+                type="button"
+                onClick={() => setShowCustomizeUnits(false)}
+                className="px-4 py-2 bg-white border-[2px] border-[#7f2c2c] text-[#7f2c2c] font-semibold"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

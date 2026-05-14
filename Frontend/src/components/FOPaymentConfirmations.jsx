@@ -8,6 +8,8 @@ import {
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import { calculateOrderTotal, formatPrice, roundPrice } from "../utils/pricing";
+import { getProofUrl } from "../api/api";
+import PageLoader from "./common/PageLoader";
 import {
   FaClipboardList,
   FaCheckCircle,
@@ -152,12 +154,7 @@ const FOPaymentConfirmations = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-[#4b2e2e]">
-        <FaSpinner className="animate-spin text-3xl mb-2 text-[#7f2c2c]" />
-        <p className="font-medium">Loading payments...</p>
-      </div>
-    );
+    return <PageLoader message="Loading payments..." />;
   }
 
   const pendingOrders = orders.filter((o) => ["payment_submitted", "payment_confirmed"].includes(o.status));
@@ -358,7 +355,7 @@ const FOPaymentConfirmations = () => {
                       <td className="p-3">
                         {order.payment?.proof ? (
                           <button
-                            onClick={() => setPreviewImage(`http://localhost:5000/uploads/${order.payment.proof}`)}
+                            onClick={() => setPreviewImage(getProofUrl(order.payment.proof))}
                             className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs font-semibold transition-all"
                           >
                             <FaEye className="text-[10px]" />
@@ -466,7 +463,7 @@ const FOPaymentConfirmations = () => {
                   <div className="flex items-center justify-between">
                     {order.payment?.proof ? (
                       <button
-                        onClick={() => setPreviewImage(`http://localhost:5000/uploads/${order.payment.proof}`)}
+                        onClick={() => setPreviewImage(getProofUrl(order.payment.proof))}
                         className="inline-flex items-center gap-1 text-blue-600 text-xs font-semibold"
                       >
                         <FaEye className="text-[10px]" /> View Proof
@@ -625,4 +622,8 @@ const FOPaymentConfirmations = () => {
 };
 
 export default FOPaymentConfirmations;
+
+
+
+
 

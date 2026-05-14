@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import { calculateLineTotal, formatPrice, roundPrice } from "../utils/pricing";
 import { useAuth } from "../context/AuthContext";
+import PageLoader from "./common/PageLoader";
 import {
   FaStore,
   FaRoad,
@@ -204,13 +205,7 @@ const BookerOrderForm = () => {
     setSubmitting(false);
   };
 
-  if (loading)
-    return (
-      <div className="flex flex-col items-center justify-center py-10 text-[#4b2e2e]">
-        <FaSpinner className="animate-spin text-3xl mb-2 text-[#7f2c2c]" />
-        <p className="font-medium text-sm">Loading stock...</p>
-      </div>
-    );
+  if (loading) return <PageLoader message="Loading stock..." />;
 
   return (
     <motion.div

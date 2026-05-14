@@ -11,6 +11,8 @@ import {
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import { calculateOrderTotal, formatPrice, roundPrice } from "../utils/pricing";
+import { getProofUrl } from "../api/api";
+import PageLoader from "./common/PageLoader";
 import {
   FaClipboardList,
   FaCheckCircle,
@@ -238,12 +240,7 @@ const DistributorOrderApproval = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-[#4b2e2e]">
-        <FaSpinner className="animate-spin text-3xl mb-2 text-[#7f2c2c]" />
-        <p className="font-medium">Loading orders...</p>
-      </div>
-    );
+    return <PageLoader message="Loading orders..." />;
   }
 
   // ==================== ORDER DETAIL CONTENT (shared between desktop panel & mobile modal) ====================
@@ -669,7 +666,7 @@ const DistributorOrderApproval = () => {
                             <td className="p-3">
                               {payment.payment?.proof ? (
                                 <button
-                                  onClick={() => setPreviewImage(`http://localhost:5000/uploads/${payment.payment.proof}`)}
+                                  onClick={() => setPreviewImage(getProofUrl(payment.payment.proof))}
                                   className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs font-semibold transition-all"
                                 >
                                   <FaEye className="text-[10px]" /> View
@@ -751,7 +748,7 @@ const DistributorOrderApproval = () => {
                             <p className="text-gray-500 text-[10px]">Proof</p>
                             {payment.payment?.proof ? (
                               <button
-                                onClick={() => setPreviewImage(`http://localhost:5000/uploads/${payment.payment.proof}`)}
+                                onClick={() => setPreviewImage(getProofUrl(payment.payment.proof))}
                                 className="inline-flex items-center gap-1 text-blue-600 text-xs font-semibold"
                               >
                                 <FaEye className="text-[10px]" /> View
@@ -939,4 +936,8 @@ const DistributorOrderApproval = () => {
 };
 
 export default DistributorOrderApproval;
+
+
+
+
 

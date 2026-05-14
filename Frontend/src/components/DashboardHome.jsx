@@ -1,4 +1,4 @@
-﻿import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
@@ -18,7 +18,8 @@ import {
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { getFOTargetApi, getFOTargetAchievementApi } from "../api/api";
+import { getFOTargetApi, getFOTargetAchievementApi, API_BASE_URL } from "../api/api";
+import PageLoader from "./common/PageLoader";
 
 const DashboardHome = () => {
   const { user } = useAuth();
@@ -70,10 +71,9 @@ const DashboardHome = () => {
         return;
       }
       
-      const res = await fetch(
-        `http://localhost:5000/api/dashboard/${user.role}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await fetch(`${API_BASE_URL}/dashboard/${user.role}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = await res.json();
       if (data.success) {
         setStats(data.data || {});
@@ -92,8 +92,7 @@ const DashboardHome = () => {
     return () => clearInterval(interval);
   }, [user.role]);
 
-  if (loading)
-    return <p className="text-[#4b2e2e] text-lg">Loading dashboard...</p>;
+  if (loading) return <PageLoader message="Loading dashboard..." />;
 
   // ----------------- FO Dashboard -----------------
   if (user.role === "FO") {
@@ -1040,5 +1039,6 @@ const DashboardHome = () => {
 };
 
 export default DashboardHome;
+
 
 

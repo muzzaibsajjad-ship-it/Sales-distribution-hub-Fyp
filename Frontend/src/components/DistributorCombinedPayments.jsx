@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { getDistributorCombinedPaymentsApi, completeOrderFromFOApi } from "../api/api";
+import { getDistributorCombinedPaymentsApi, completeOrderFromFOApi, getProofUrl } from "../api/api";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
+import PageLoader from "./common/PageLoader";
 import {
   FaClipboardList,
   FaCheckCircle,
@@ -53,12 +54,7 @@ const DistributorCombinedPayments = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-[#4b2e2e]">
-        <FaSpinner className="animate-spin text-3xl mb-2 text-[#7f2c2c]" />
-        <p className="font-medium">Loading payments...</p>
-      </div>
-    );
+    return <PageLoader message="Loading payments..." />;
   }
 
   return (
@@ -135,7 +131,7 @@ const DistributorCombinedPayments = () => {
                       <td className="p-3">
                         {payment.payment?.proof ? (
                           <button
-                            onClick={() => setPreviewImage(`http://localhost:5000/uploads/${payment.payment.proof}`)}
+                            onClick={() => setPreviewImage(getProofUrl(payment.payment.proof))}
                             className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs font-semibold transition-all"
                           >
                             <FaEye className="text-[10px]" /> View Proof
@@ -219,7 +215,7 @@ const DistributorCombinedPayments = () => {
                     </span>
                     {payment.payment?.proof ? (
                       <button
-                        onClick={() => setPreviewImage(`http://localhost:5000/uploads/${payment.payment.proof}`)}
+                        onClick={() => setPreviewImage(getProofUrl(payment.payment.proof))}
                         className="inline-flex items-center gap-1 text-blue-600 text-xs font-semibold"
                       >
                         <FaEye className="text-[10px]" /> View Proof

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDistributorRequestsApi, deleteDistributorRequestApi, approveDistributorRequestApi } from "../api/api";
-import { FaTrash, FaSpinner, FaExclamationTriangle, FaInbox, FaCheck } from "react-icons/fa";
+import { FaTrash, FaExclamationTriangle, FaInbox, FaCheck } from "react-icons/fa";
+import PageLoader from "./common/PageLoader";
 
 const DistributorRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -60,12 +61,7 @@ const DistributorRequests = () => {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-6 text-[#4b2e2e]">
-        <FaSpinner className="animate-spin text-4xl mb-4 text-[#7f2c2c]" />
-        <p className="text-lg font-semibold">Loading distributor requests...</p>
-      </div>
-    );
+    return <PageLoader message="Loading distributor requests..." />;
   }
 
   return (

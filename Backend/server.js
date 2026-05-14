@@ -29,7 +29,10 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 const app = express();
-app.use(cors());
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",").map((origin) => origin.trim())
+  : true;
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // Routes

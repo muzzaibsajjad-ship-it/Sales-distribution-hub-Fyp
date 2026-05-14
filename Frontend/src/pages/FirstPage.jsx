@@ -8,6 +8,11 @@ import {
   FiFacebook, FiInstagram, FiTwitter, FiYoutube,
   FiChevronRight,
 } from "react-icons/fi";
+import {
+  sanitizeAlphaNumericText,
+  sanitizeNumberOnly,
+  sanitizeTextOnly,
+} from "../utils/inputValidation";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    DATA
@@ -184,7 +189,11 @@ const FirstPage = () => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setFormData(p => ({ ...p, [name]: value }));
+    let nextValue = value;
+    if (name === "name" || name === "city") nextValue = sanitizeTextOnly(value);
+    if (name === "contact") nextValue = sanitizeNumberOnly(value).slice(0, 15);
+    if (name === "address" || name === "investment") nextValue = sanitizeAlphaNumericText(value);
+    setFormData(p => ({ ...p, [name]: nextValue }));
   };
 
   const handleSubmit = async () => {
@@ -786,6 +795,8 @@ const FirstPage = () => {
               <div key={f.name} style={{ gridColumn: f.span === 2 ? "1 / -1" : "auto", display: "flex", flexDirection: "column", gap: 5 }}>
                 <label style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.65)" }}>{f.label}</label>
                 <input type={f.type} name={f.name} value={formData[f.name]} onChange={handleChange} placeholder={f.ph}
+                  inputMode={f.name === "contact" ? "numeric" : undefined}
+                  pattern={f.name === "name" || f.name === "city" ? "[A-Za-z ]+" : undefined}
                   style={{ background: "rgba(255,255,255,0.11)", border: "1.5px solid rgba(255,255,255,0.18)", borderRadius: 10, padding: "10px 14px", color: "#fff", fontFamily: "'DM Sans',sans-serif", fontSize: "0.875rem", outline: "none", transition: "all 0.25s", width: "100%" }}
                   onFocus={e => { e.target.style.borderColor = "#ffd6a0"; e.target.style.background = "rgba(255,255,255,0.18)"; }}
                   onBlur={e => { e.target.style.borderColor = "rgba(255,255,255,0.18)"; e.target.style.background = "rgba(255,255,255,0.11)"; }}

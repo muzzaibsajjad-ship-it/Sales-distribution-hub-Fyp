@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchReports } from "../api/api";
+import PageLoader from "./common/PageLoader";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -18,10 +19,7 @@ const ReportPage = () => {
     loadReport();
   }, []);
 
-  if (loading)
-    return (
-      <p className="text-[#4b2e2e] text-center py-10">Loading report...</p>
-    );
+  if (loading) return <PageLoader message="Loading report..." />;
   if (!report)
     return (
       <p className="text-[#4b2e2e] text-center py-10">

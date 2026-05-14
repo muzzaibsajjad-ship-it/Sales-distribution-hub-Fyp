@@ -10,6 +10,7 @@ import {
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import PageLoader from "./common/PageLoader";
 
 const BookerManagement = () => {
   const [bookers, setBookers] = useState([]);
@@ -117,12 +118,7 @@ const BookerManagement = () => {
     }
   };
 
-  if (loading)
-    return (
-      <p className="text-[#4b2e2e] font-medium text-center py-10">
-        Loading bookers...
-      </p>
-    );
+  if (loading) return <PageLoader message="Loading bookers..." />;
 
   return (
     <motion.div

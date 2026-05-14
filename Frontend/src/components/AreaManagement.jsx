@@ -14,6 +14,7 @@ import {
 } from "../api/api";
 import { toast } from "react-toastify";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import PageLoader from "./common/PageLoader";
 
 const AreaManagement = () => {
   const { user } = useAuth();
@@ -162,11 +163,7 @@ const AreaManagement = () => {
   };
 
   if (loading) {
-    return (
-      <p className="text-[#4b2e2e] font-medium text-center py-10">
-        Loading areas...
-      </p>
-    );
+    return <PageLoader message="Loading areas..." />;
   }
 
   // FO view - only shows assigned areas

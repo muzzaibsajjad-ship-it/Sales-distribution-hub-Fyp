@@ -3,6 +3,8 @@ import { getPendingOrdersApi, confirmCombinedPaymentApi } from "../api/api";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaEye } from "react-icons/fa";
+import { getProofUrl } from "../api/api";
+import PageLoader from "./common/PageLoader";
 
 const SolePaymentConfirmation = () => {
   const [orders, setOrders] = useState([]);
@@ -70,12 +72,7 @@ const SolePaymentConfirmation = () => {
     );
   };
 
-  if (loading)
-    return (
-      <p className="text-[#4b2e2e] font-medium text-center py-10">
-        Loading...
-      </p>
-    );
+  if (loading) return <PageLoader message="Loading payments..." />;
 
   return (
     <motion.div
@@ -173,7 +170,7 @@ const SolePaymentConfirmation = () => {
                           <p>
                             <span className="font-medium">Proof:</span>{" "}
                             <a
-                              href={`http://localhost:5000/uploads/${selectedOrder.payment.proof}`}
+                              href={getProofUrl(selectedOrder.payment.proof)}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline inline-flex items-center gap-1"
@@ -249,3 +246,7 @@ const SolePaymentConfirmation = () => {
 };
 
 export default SolePaymentConfirmation;
+
+
+
+

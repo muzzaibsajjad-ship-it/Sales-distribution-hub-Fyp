@@ -1,7 +1,18 @@
 import axios from "axios";
 
+const rawBackendUrl = import.meta.env.BACKEND_URL || "http://localhost:5000";
+const sanitizedBackendUrl = rawBackendUrl.replace(/\/+$/, "");
+
+export const API_BASE_URL = `${sanitizedBackendUrl}/api`;
+export const UPLOADS_BASE_URL = `${sanitizedBackendUrl}/uploads`;
+export const getProofUrl = (proof) => {
+  if (!proof) return "";
+  if (/^https?:\/\//i.test(proof)) return proof;
+  return `${UPLOADS_BASE_URL}/${proof}`;
+};
+
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: API_BASE_URL,
 });
 
 // Add token to headers
@@ -825,3 +836,4 @@ export const toggleSupplierStatusApi = async (id) => {
 };
 
 export default API;
+

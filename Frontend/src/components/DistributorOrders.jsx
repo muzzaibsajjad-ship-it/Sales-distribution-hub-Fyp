@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import API, { getNextInvoiceNumberApi } from "../api/api";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
+import { getProofUrl } from "../api/api";
+import PageLoader from "./common/PageLoader";
 import {
   FaClipboardList,
   FaCheckCircle,
@@ -106,13 +108,7 @@ const DistributorOrders = () => {
     canceled: { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", label: "Canceled" },
   };
 
-  if (loading)
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-[#4b2e2e]">
-        <FaSpinner className="animate-spin text-3xl mb-2 text-[#7f2c2c]" />
-        <p className="font-medium">Loading orders...</p>
-      </div>
-    );
+  if (loading) return <PageLoader message="Loading orders..." />;
 
   return (
     <div className="bg-[#E8F0F8] min-h-screen text-[#4b2e2e] p-4 md:p-6">
@@ -200,7 +196,7 @@ const DistributorOrders = () => {
                           </span>
                           {order.payment?.proof && (
                             <button
-                              onClick={() => setPreviewImage(`http://localhost:5000/uploads/${order.payment.proof}`)}
+                              onClick={() => setPreviewImage(getProofUrl(order.payment.proof))}
                               className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs font-semibold transition-all"
                             >
                               <FaEye className="text-[10px]" /> View Proof
@@ -215,7 +211,7 @@ const DistributorOrders = () => {
                           </span>
                           {order.payment?.proof && (
                             <button
-                              onClick={() => setPreviewImage(`http://localhost:5000/uploads/${order.payment.proof}`)}
+                              onClick={() => setPreviewImage(getProofUrl(order.payment.proof))}
                               className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs font-semibold transition-all"
                             >
                               <FaEye className="text-[10px]" /> View Proof
@@ -293,7 +289,7 @@ const DistributorOrders = () => {
                     </span>
                     {order.payment?.proof && (
                       <button
-                        onClick={() => setPreviewImage(`http://localhost:5000/uploads/${order.payment.proof}`)}
+                        onClick={() => setPreviewImage(getProofUrl(order.payment.proof))}
                         className="w-full inline-flex items-center justify-center gap-1 text-blue-600 text-xs font-semibold py-1"
                       >
                         <FaEye className="text-[10px]" /> View Proof
@@ -308,7 +304,7 @@ const DistributorOrders = () => {
                     </span>
                     {order.payment?.proof && (
                       <button
-                        onClick={() => setPreviewImage(`http://localhost:5000/uploads/${order.payment.proof}`)}
+                        onClick={() => setPreviewImage(getProofUrl(order.payment.proof))}
                         className="w-full inline-flex items-center justify-center gap-1 text-blue-600 text-xs font-semibold py-1"
                       >
                         <FaEye className="text-[10px]" /> View Proof
@@ -457,4 +453,8 @@ const DistributorOrders = () => {
 };
 
 export default DistributorOrders;
+
+
+
+
 

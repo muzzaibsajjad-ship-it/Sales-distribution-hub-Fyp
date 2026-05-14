@@ -5,6 +5,7 @@ import {
 } from "../api/api";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
+import PageLoader from "./common/PageLoader";
 import {
   FaTags,
   FaSearch,
@@ -96,12 +97,7 @@ const DistributorStockPrices = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-[#4b2e2e]">
-        <FaSpinner className="animate-spin text-3xl mb-2 text-[#7f2c2c]" />
-        <p className="font-medium">Loading stock prices...</p>
-      </div>
-    );
+    return <PageLoader message="Loading stock prices..." />;
   }
 
   const setCount = stock.filter((s) => s.sellingPrice).length;

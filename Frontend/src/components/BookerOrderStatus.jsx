@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { calculateLineTotal, calculateOrderSubtotal, calculateOrderTotal as calculateRoundedOrderTotal, formatPrice, roundPrice } from "../utils/pricing";
+import PageLoader from "./common/PageLoader";
 
 const BookerOrderStatus = () => {
   const [orders, setOrders] = useState([]);
@@ -133,12 +134,7 @@ const BookerOrderStatus = () => {
     );
   };
 
-  if (loading)
-    return (
-      <p className="text-[#4b2e2e] font-medium text-center py-10">
-        Loading your orders...
-      </p>
-    );
+  if (loading) return <PageLoader message="Loading your orders..." />;
 
   return (
     <motion.div
