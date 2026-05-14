@@ -124,7 +124,7 @@ const BookerManagement = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="p-6 bg-[#E8F0F8] rounded-md"
+      className="p-4 md:p-6 bg-[#E8F0F8] rounded-md text-sm md:text-base"
     >
       <h2 className="text-2xl font-semibold mb-6 text-[#4b2e2e]">
         Booker Management
@@ -136,108 +136,131 @@ const BookerManagement = () => {
 
       {!bookers.length ? (
         <div className="text-center py-10">
-          <p className="text-[#4b2e2e] font-medium">
-            No bookers found. Create a booker first.
-          </p>
+          <p className="text-[#4b2e2e] font-medium">No bookers found. Create a booker first.</p>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full border border-[#7f2c2c] text-sm text-[#4b2e2e]">
-            <thead className="bg-[#7f2c2c]/20">
-              <tr>
-                <th className="p-3 border border-[#7f2c2c] text-left">Name</th>
-                <th className="p-3 border border-[#7f2c2c] text-left">Email</th>
-                <th className="p-3 border border-[#7f2c2c] text-left">Assigned Area</th>
-                <th className="p-3 border border-[#7f2c2c] text-left">Routes</th>
-                <th className="p-3 border border-[#7f2c2c] text-left">Target</th>
-                <th className="p-3 border border-[#7f2c2c] text-left">Status</th>
-                <th className="p-3 border border-[#7f2c2c] text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {bookers.map((booker, i) => (
-                <motion.tr
-                  key={booker._id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="hover:bg-[#7f2c2c]/10 transition-all"
-                >
-                  <td className="p-3 border border-[#7f2c2c] font-medium">
-                    {booker.name}
-                  </td>
-                  <td className="p-3 border border-[#7f2c2c]">{booker.email}</td>
-                  <td className="p-3 border border-[#7f2c2c]">
-                    {booker.assignedArea?.name || (
-                      <span className="text-gray-400 italic">Not assigned</span>
-                    )}
-                  </td>
-                  <td className="p-3 border border-[#7f2c2c]">
-                    {booker.routes?.length > 0 ? (
-                      <div className="flex flex-wrap gap-1">
-                        {booker.routes.map((route, idx) => (
-                          <span 
-                            key={idx} 
+        <>
+          {/* Mobile: card list */}
+          <div className="space-y-3 md:hidden">
+            {bookers.map((booker, i) => (
+              <motion.div
+                key={booker._id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.03 }}
+                className="bg-white rounded-lg p-4 shadow-sm border border-[#7f2c2c]/10"
+              >
+                <div className="flex justify-between items-start gap-3">
+                  <div className="flex-1">
+                    <p className="font-semibold text-[#4b2e2e]">{booker.name}</p>
+                    <p className="text-sm text-gray-500">{booker.email}</p>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {booker.assignedArea?.name || (
+                        <span className="text-gray-400 italic">Not assigned</span>
+                      )}
+                    </p>
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {booker.routes?.length > 0 ? (
+                        booker.routes.map((route, idx) => (
+                          <span
+                            key={idx}
                             className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-xs"
                           >
                             {route}
                           </span>
-                        ))}
-                      </div>
-                    ) : (
-                      <span className="text-gray-400 italic">No routes</span>
-                    )}
-                  </td>
-                  <td className="p-3 border border-[#7f2c2c]">
-                    {booker.bookerTarget > 0 ? (
-                      <div>
-                        <span className="font-semibold">{booker.bookerTarget}</span>
-                        <span className="text-gray-500 text-xs ml-1">
-                          ({booker.targetMonth})
-                        </span>
-                      </div>
-                    ) : (
-                      <span className="text-gray-400 italic">No target</span>
-                    )}
-                  </td>
-                  <td className="p-3 border border-[#7f2c2c]">
-                    <span
-                      className={`px-2 py-1 rounded text-xs ${
-                        booker.isActive !== false
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {booker.isActive !== false ? "Active" : "Inactive"}
-                    </span>
-                  </td>
-                  <td className="p-3 border border-[#7f2c2c]">
-                    <div className="flex flex-col gap-2">
-                      <button
-                        onClick={() => handleAssignArea(booker)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded text-xs"
-                      >
-                        Assign Area & Routes
-                      </button>
-                      <button
-                        onClick={() => handleSetTarget(booker)}
-                        className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 rounded text-xs"
-                      >
-                        Set Target
-                      </button>
-                      <button
-                        onClick={() => handleDelete(booker._id)}
-                        className="bg-gradient-to-r from-red-500 to-pink-600 text-white px-3 py-1.5 rounded text-xs"
-                      >
-                        <FaTrash className="inline mr-1" /> Delete
-                      </button>
+                        ))
+                      ) : (
+                        <span className="text-gray-400 italic text-xs">No routes</span>
+                      )}
                     </div>
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+
+                  <div className="w-36 flex-shrink-0">
+                    <div className="flex flex-col items-end gap-2">
+                      <span className={`px-2 py-1 rounded text-xs ${
+                        booker.isActive !== false ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                      }`}>
+                        {booker.isActive !== false ? "Active" : "Inactive"}
+                      </span>
+                      <div className="w-full mt-1">
+                        <button
+                          onClick={() => handleAssignArea(booker)}
+                          className="w-full mb-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm"
+                        >
+                          Assign
+                        </button>
+                        <button
+                          onClick={() => handleSetTarget(booker)}
+                          className="w-full mb-2 bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded text-sm"
+                        >
+                          Target
+                        </button>
+                        <button
+                          onClick={() => handleDelete(booker._id)}
+                          className="w-full bg-gradient-to-r from-red-500 to-pink-600 text-white px-3 py-2 rounded text-sm"
+                        >
+                          <FaTrash className="inline mr-1" /> Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Desktop/tablet: keep existing table for md+ */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full border border-[#7f2c2c] text-sm text-[#4b2e2e]">
+              <thead className="bg-[#7f2c2c]/20">
+                <tr>
+                  <th className="p-3 border border-[#7f2c2c] text-left">Name</th>
+                  <th className="p-3 border border-[#7f2c2c] text-left">Email</th>
+                  <th className="p-3 border border-[#7f2c2c] text-left">Assigned Area</th>
+                  <th className="p-3 border border-[#7f2c2c] text-left">Routes</th>
+                  <th className="p-3 border border-[#7f2c2c] text-left">Target</th>
+                  <th className="p-3 border border-[#7f2c2c] text-left">Status</th>
+                  <th className="p-3 border border-[#7f2c2c] text-left">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookers.map((booker, i) => (
+                  <motion.tr
+                    key={booker._id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    className="hover:bg-[#7f2c2c]/10 transition-all"
+                  >
+                    <td className="p-3 border border-[#7f2c2c] font-medium">{booker.name}</td>
+                    <td className="p-3 border border-[#7f2c2c]">{booker.email}</td>
+                    <td className="p-3 border border-[#7f2c2c]">{booker.assignedArea?.name || (<span className="text-gray-400 italic">Not assigned</span>)}</td>
+                    <td className="p-3 border border-[#7f2c2c]">
+                      {booker.routes?.length > 0 ? (
+                        <div className="flex flex-wrap gap-1">
+                          {booker.routes.map((route, idx) => (
+                            <span key={idx} className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-xs">{route}</span>
+                          ))}
+                        </div>
+                      ) : (
+                        <span className="text-gray-400 italic">No routes</span>
+                      )}
+                    </td>
+                    <td className="p-3 border border-[#7f2c2c]">{booker.bookerTarget > 0 ? (<div><span className="font-semibold">{booker.bookerTarget}</span><span className="text-gray-500 text-xs ml-1">({booker.targetMonth})</span></div>) : (<span className="text-gray-400 italic">No target</span>)}</td>
+                    <td className="p-3 border border-[#7f2c2c]"><span className={`px-2 py-1 rounded text-xs ${booker.isActive !== false ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>{booker.isActive !== false ? "Active" : "Inactive"}</span></td>
+                    <td className="p-3 border border-[#7f2c2c]">
+                      <div className="flex flex-col gap-2">
+                        <button onClick={() => handleAssignArea(booker)} className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded text-xs">Assign Area & Routes</button>
+                        <button onClick={() => handleSetTarget(booker)} className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 rounded text-xs">Set Target</button>
+                        <button onClick={() => handleDelete(booker._id)} className="bg-gradient-to-r from-red-500 to-pink-600 text-white px-3 py-1.5 rounded text-xs"><FaTrash className="inline mr-1" /> Delete</button>
+                      </div>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
 
       {/* Modal for Assign Area/Routes or Set Target */}

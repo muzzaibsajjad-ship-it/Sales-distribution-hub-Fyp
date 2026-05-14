@@ -162,26 +162,26 @@ const DashboardHome = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-2xl p-8 mb-8 shadow-xl bg-gradient-to-br from-[#7f2c2c] to-[#5a1f1f] text-white"
+          className="rounded-2xl p-6 mb-8 shadow-md bg-gradient-to-br from-[#7f2c2c] to-[#5a1f1f] text-white"
         >
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
             {/* Target Info */}
             <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <FaBullseye className="text-3xl text-[#f5c16c]" />
-                <h3 className="text-2xl font-bold">Monthly Stock Target</h3>
+              <div className="flex items-center gap-2 mb-1">
+                <FaBullseye className="text-2xl text-[#f5c16c]" />
+                <h3 className="text-xl font-bold">Monthly Stock Target</h3>
               </div>
-              <p className="text-[#f5c16c] text-lg mb-4">
+              <p className="text-[#f5c16c] text-sm mb-3">
                 Target for {formatMonth(stats.targetMonth)}
               </p>
               <div className="flex items-baseline gap-2">
-                <span className="text-5xl font-bold">{target}</span>
-                <span className="text-xl opacity-80">units</span>
+                <span className="text-4xl font-bold">{target}</span>
+                <span className="text-lg opacity-80">units</span>
               </div>
             </div>
 
             {/* Progress Circle */}
-            <div className="w-48 h-48">
+            <div className="w-36 h-36">
               <CircularProgressbar
                 value={stats.achievementPercent || 0}
                 text={`${Math.round(stats.achievementPercent || 0)}%`}
@@ -189,14 +189,14 @@ const DashboardHome = () => {
                   textColor: "#fff",
                   pathColor: "#f5c16c",
                   trailColor: "rgba(255,255,255,0.2)",
-                  textSize: "20px",
+                  textSize: "18px",
                 })}
               />
             </div>
           </div>
 
           {/* Progress Bar */}
-          <div className="mt-6">
+          <div className="mt-4">
             <div className="flex justify-between text-sm mb-2">
               <span>Progress</span>
               <span>{achieved} / {target} units</span>
@@ -331,26 +331,26 @@ const DashboardHome = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-2xl p-8 mb-8 shadow-xl bg-gradient-to-br from-[#7f2c2c] to-[#5a1f1f] text-white"
+          className="rounded-2xl p-6 mb-8 shadow-md bg-gradient-to-br from-[#7f2c2c] to-[#5a1f1f] text-white"
         >
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
             {/* Target Info */}
             <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <FaBullseye className="text-3xl text-[#f5c16c]" />
-                <h3 className="text-2xl font-bold">Monthly Order Target</h3>
+              <div className="flex items-center gap-2 mb-1">
+                <FaBullseye className="text-2xl text-[#f5c16c]" />
+                <h3 className="text-xl font-bold">Monthly Order Target</h3>
               </div>
-              <p className="text-[#f5c16c] text-lg mb-4">
+              <p className="text-[#f5c16c] text-sm mb-3">
                 Target for {formatMonth(stats.targetMonth)}
               </p>
               <div className="flex items-baseline gap-2">
-                <span className="text-5xl font-bold">{target}</span>
-                <span className="text-xl opacity-80">units</span>
+                <span className="text-4xl font-bold">{target}</span>
+                <span className="text-lg opacity-80">units</span>
               </div>
             </div>
 
             {/* Progress Circle */}
-            <div className="w-48 h-48">
+            <div className="w-36 h-36">
               <CircularProgressbar
                 value={achievementPercent}
                 text={`${Math.round(achievementPercent)}%`}
@@ -358,14 +358,14 @@ const DashboardHome = () => {
                   textColor: "#fff",
                   pathColor: "#f5c16c",
                   trailColor: "rgba(255,255,255,0.2)",
-                  textSize: "20px",
+                  textSize: "18px",
                 })}
               />
             </div>
           </div>
 
           {/* Progress Bar */}
-          <div className="mt-6">
+          <div className="mt-4">
             <div className="flex justify-between text-sm mb-2">
               <span>Progress</span>
               <span>{achieved} / {target} units</span>
