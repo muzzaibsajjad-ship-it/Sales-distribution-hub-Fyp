@@ -71,6 +71,7 @@ const DistributorOrders = () => {
     setSubmitting(true);
     const formData = new FormData();
     formData.append("orderId", paymentOrderId);
+    formData.append("invoiceNumber", paymentData.invoiceNumber || "");
     formData.append("amount", paymentData.amount);
     formData.append("method", paymentData.method);
     formData.append("proof", paymentData.proof);

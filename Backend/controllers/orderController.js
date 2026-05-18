@@ -1,5 +1,5 @@
 import Order from "../models/Order.js";
-// import User from "../models/User.js";
+import User from "../models/User.js";
 import Stock from "../models/Stock.js";
 import ItemVisibility from "../models/ItemVisibility.js";
 import asyncHandler from "express-async-handler";
@@ -1423,9 +1423,6 @@ export const getDistributorStockWithPrices = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
-
-// Import User for booker functions
-import User from "../models/User.js";
 
 const getDistributorUnitCostFromPurchases = async (distributorId, itemName) => {
   const purchases = await Payment.find({

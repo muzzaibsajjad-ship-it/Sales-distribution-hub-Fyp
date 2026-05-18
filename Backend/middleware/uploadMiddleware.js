@@ -2,10 +2,10 @@ import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import { Readable } from "stream";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+const getCloudinaryCredentials = () => ({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME?.trim(),
+  api_key: process.env.CLOUDINARY_API_KEY?.trim(),
+  api_secret: process.env.CLOUDINARY_API_SECRET?.trim(),
 });
 
 const storage = multer.memoryStorage();
@@ -21,16 +21,19 @@ const uploadToCloudinary = async (req, res, next) => {
   try {
     if (!req.file) return next();
 
-    if (
-      !process.env.CLOUDINARY_CLOUD_NAME ||
-      !process.env.CLOUDINARY_API_KEY ||
-      !process.env.CLOUDINARY_API_SECRET
-    ) {
+    const credentials = getCloudinaryCredentials();
+    const missingCredentials = Object.entries(credentials)
+      .filter(([, value]) => !value)
+      .map(([key]) => key);
+
+    if (missingCredentials.length > 0) {
       return res.status(500).json({
         success: false,
-        message: "Cloudinary credentials are missing on server",
+        message: `Cloudinary credentials are missing on server: ${missingCredentials.join(", ")}`,
       });
     }
+
+    cloudinary.config(credentials);
 
     const result = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
@@ -59,7 +62,7 @@ const uploadToCloudinary = async (req, res, next) => {
     console.error("Cloudinary upload failed:", error.message);
     res.status(500).json({
       success: false,
-      message: "Failed to upload image to Cloudinary",
+      message: `Failed to upload image to Cloudinary: ${error.message}`,
     });
   }
 };

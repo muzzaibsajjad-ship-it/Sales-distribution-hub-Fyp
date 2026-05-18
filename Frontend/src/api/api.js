@@ -223,12 +223,17 @@ export const submitPaymentApi = async (
   { invoiceNumber, amount, method, proof }
 ) => {
   try {
-    const { data } = await API.put("/orders/submit-payment", {
-      orderId,
-      invoiceNumber,
-      amount,
-      method,
-      proof,
+    const formData = new FormData();
+    formData.append("orderId", orderId);
+    formData.append("invoiceNumber", invoiceNumber || "");
+    formData.append("amount", amount);
+    formData.append("method", method);
+    if (proof) {
+      formData.append("proof", proof);
+    }
+
+    const { data } = await API.put("/orders/submit-payment", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
     });
     return { success: true, data };
   } catch (err) {
